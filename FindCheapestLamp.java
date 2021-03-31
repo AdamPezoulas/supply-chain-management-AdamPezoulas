@@ -10,6 +10,7 @@ public class FindCheapestLamp
 	private String type; //Type of lamp wanted
 	private int number; //Amount of lamps wanted
 	private ResultSet results; //stores all lamps of correct type
+	List<Lamp> lamps = new ArrayList<Lamp>(); 	//array list of Lamp class
 	
 	FindCheapestLamp(String dburl, String user, String pass, String type, int number)
 	{
@@ -26,6 +27,8 @@ public class FindCheapestLamp
 		
 	}
 	
+	
+	
 	private void initializeConnection()
 	{
 		/** 
@@ -40,6 +43,9 @@ public class FindCheapestLamp
         }
 	}
 	
+	
+	
+	
 	public String[] sourceLamp()
 	{
 		/** 
@@ -47,39 +53,22 @@ public class FindCheapestLamp
 		Returns the IDs of the possible manufacturers if there is no valid combination
 		*/
 		
-		List<Lamp> lamps = new ArrayList<Lamp>(); 	//array list of Lamp class
+		
 		
 		int cost = 0; //cost of all the lamps
 		ArrayList<String> ids = new ArrayList<String>(); //String array that will be returned
 		
-		try
-		{
+
 			this.readData();	//reads correct rows from the server
 			
-
-			while (results.next())
-			{
-				//Creates and adds Lamp objects to the arrayList
-				Lamp lam = new Lamp();
-				lam.setID(results.getString("ID"));
-				lam.setBase(results.getString("Base"));
-				lam.setBulb(results.getString("Bulb"));
-				lam.setPrice(results.getInt("Price"));
-				lam.setManuID(results.getString("manuID"));
-				lamps.add(lam);
-			}
-		}
-		catch(SQLException e)
-		{
-			System.out.println("Error in getCheapest");
-		}
-		
 		//runs as many times as needed for the number of lamps
 		for(int i = 0; i < this.number; i++)
 		{
 			
 			//call get cheapest to get array of IDs
 			String[] temp = getCheapest(lamps);
+			
+			
 			//if returns an array of manufacturer IDs 
 			if(Character.isLetter(temp[0].charAt(0)) != true)
 			{
@@ -89,23 +78,39 @@ public class FindCheapestLamp
 			else
 			{
 				//add IDs gathered to IDs list
-				for(int j = 0; j < temp.length - 1; j++)
+				for(int j = 0; j < temp.length; j++)
 				{
 					ids.add(temp[j]);
 				}
 				
-				//increment the cost
-				cost = cost + Integer.parseInt(temp[temp.length -1]);
+
 				
-				//remove the used lamps from the arrayList
-				for(int j = 0; j < lamps.size()-1; j++)
+				int[] toRemove = new int[] {-1, -1};
+				int remIndex = 0;
+				
+				//determines the index of lamps used
+				for(int j = 0; j < lamps.size(); j++)
 				{
 					for(int x = 0; x < temp.length; x++)
 					{
-						if(temp[x].equals(lamps.get(j).getID()))
+						String tempLamp = lamps.get(j).getID();
+						if(temp[x].equals(tempLamp))
 						{
-							lamps.remove(j);
+							toRemove[remIndex] = j;
+							remIndex++;
+							
+							cost = cost + lamps.get(j).getPrice();
 						}
+					}
+				}
+				
+				//remove the laps used from the array list
+				for(int j = 0; j < toRemove.length; j++)
+				{
+					
+					if(toRemove[j] != -1)
+					{
+						lamps.remove(toRemove[j] - j);
 					}
 				}
 				
@@ -144,16 +149,11 @@ public class FindCheapestLamp
 					if(min > lamps.get(i).getPrice())
 					{
 						min = lamps.get(i).getPrice();
-						IDs = new String[] {lamps.get(i).getID(), Integer.toString(min)};
+						IDs = new String[] {lamps.get(i).getID()};
 					}
 					
 				}
-			}
-			
-			
-			//sees if a combination of 2 laps fulfills order for cheaper
-			for(int i = 0; i < lamps.size(); i++)
-			{
+				
 				for(int j = 0; j < lamps.size(); j++)
 				{
 					if( lamps.get(i).getBase().equals("Y") && lamps.get(j).getBulb().equals("Y"))
@@ -161,11 +161,13 @@ public class FindCheapestLamp
 						if(min >= lamps.get(i).getPrice() + lamps.get(j).getPrice())
 						{
 							min = lamps.get(i).getPrice() + lamps.get(j).getPrice();
-							IDs = new String[] {lamps.get(i).getID(), lamps.get(j).getID(), Integer.toString(min)};
+							IDs = new String[] {lamps.get(i).getID(), lamps.get(j).getID()};
 						}
 					}
 				}
 			}
+			
+			
 		
 		//if minimum has been unchanged return array of manufacturer IDs
 		if(min == 999999)
@@ -173,11 +175,6 @@ public class FindCheapestLamp
 			IDs = new String[] {"002", "004", "005"};
 		}
 		
-		for(int i = 0; i < IDs.length; i++)
-		{
-			System.out.println(IDs[i]);
-		}
-		System.out.println();
 		return IDs;	
 		
 	}
@@ -190,7 +187,19 @@ public class FindCheapestLamp
 		try {                    
             Statement state = dbConnect.createStatement();
             results = state.executeQuery("SELECT * FROM lamp WHERE Type = " + "\"" + type + "\"" );
-			
+
+
+			while (results.next())
+			{
+				//Creates and adds Lamp objects to the arrayList
+				Lamp lam = new Lamp();
+				lam.setID(results.getString("ID"));
+				lam.setBase(results.getString("Base"));
+				lam.setBulb(results.getString("Bulb"));
+				lam.setPrice(results.getInt("Price"));
+				lam.setManuID(results.getString("manuID"));
+				lamps.add(lam);
+			}
 
         } catch (SQLException ex) {
 			System.out.println("Error in readData");
@@ -202,8 +211,11 @@ public class FindCheapestLamp
 	public static void main(String[] args) 
 	{
 
-        FindCheapestLamp test = new FindCheapestLamp("jdbc:mysql://localhost/inventory","adam","ENSF409","Desk",5);
+        FindCheapestLamp test = new FindCheapestLamp("jdbc:mysql://localhost/inventory","adam","ENSF409","Swing Arm",3);
         String[] data = test.sourceLamp();
-		System.out.println(data[0] + "    " + data[1]);
+		for(int i = 0; i < data.length; i++)
+		{
+			System.out.println(data[i]);
+		}
 	}
 }
