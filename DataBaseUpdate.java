@@ -13,8 +13,6 @@ import java.sql.*;
  */
 
 public class DataBaseUpdate {
-    private String object;
-    private String[] ids;
     public final String DBURL; // store the database url information
     public final String USERNAME; // store the user's account username
     public final String PASSWORD; // store the user's account password
@@ -23,8 +21,6 @@ public class DataBaseUpdate {
      * Default constructor
      */
     public DataBaseUpdate() {
-        this.object = null;
-        this.ids = null;
         this.DBURL = null;
         this.USERNAME = null;
         this.PASSWORD = null;
@@ -33,15 +29,12 @@ public class DataBaseUpdate {
     /**
      * Constructor initializes all the class variables
      * 
-     * @param object   the object type so we know what table to look into
-     * @param ids      a array of the different objects that were ordered
      * @param dburl
      * @param username
      * @param password
      */
-    public DataBaseUpdate(String object, String[] ids, String dburl, String username, String password) {
-        this.ids = ids;
-        this.object = object;
+    public DataBaseUpdate(String dburl, String username, String password) {
+
         this.DBURL = dburl;
         this.USERNAME = username;
         this.PASSWORD = password;
@@ -50,7 +43,7 @@ public class DataBaseUpdate {
     /**
      * This function will remove the items bought by the user from the database
      */
-    public void deleteItem() {
+    public void deleteItem(String object, String[] ids) {
         try {
             //trying to establish a connection to the database
             Connection connectToDatabase = DriverManager.getConnection(getDBURL(), getUSERNAME(), getPASSWORD());
