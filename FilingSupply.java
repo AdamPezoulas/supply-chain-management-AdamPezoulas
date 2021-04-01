@@ -149,7 +149,7 @@ public class FilingSupply{
 			if(pairs.size() != 0) {
 				for( int i =0; i< pairs.size(); i++) {
 					if(filingPrices.get(Integer.parseInt(pairs.get(i))) < cheapestpair) {
-						cheapestpair = filingPrices.get(Integer.parseInt(pairs.get(i).substring(0,1))) + filingPrices.get(Integer.parseInt(pairs.get(i).substring(1,2)));
+						cheapestpair = filingPrices.get(Integer.parseInt(pairs.get(i)));
 						cheapestpairIndex = i;
 					}
 				}
@@ -158,19 +158,19 @@ public class FilingSupply{
 				BuyList.add(filingIDs.get(Integer.parseInt(pairs.get(cheapestpairIndex))));
 				totalcost += filingPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex)));
 				if(filingIDs.size()==0){
-						
+					return errorMessage();
 					
 				}
 					
-				filingIDs.remove(pairs.get(cheapestpairIndex));
+				filingIDs.remove(Integer.parseInt(pairs.get(cheapestpairIndex)));
 				if(filingIDs.size()==0){
-					
+					return errorMessage();
 					
 				}
-				filingRails.remove(pairs.get(cheapestpairIndex));
-				filingDrawers.remove(pairs.get(cheapestpairIndex));
-				filingCabinets.remove(pairs.get(cheapestpairIndex));
-				filingPrices.remove(pairs.get(cheapestpairIndex));
+				filingRails.remove(Integer.parseInt(pairs.get(cheapestpairIndex)));
+				filingDrawers.remove(Integer.parseInt(pairs.get(cheapestpairIndex)));
+				filingCabinets.remove(Integer.parseInt(pairs.get(cheapestpairIndex)));
+				filingPrices.remove(Integer.parseInt(pairs.get(cheapestpairIndex)));
 				pairs.clear();
 				
 				quantity-=1;
@@ -261,24 +261,24 @@ public class FilingSupply{
 						totalcost += filingPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1))) + filingPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2))) + filingPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(2,3)));
 						
 						
-						filingIDs.remove(pairs.get(cheapestpairIndex).substring(0,1));
+						filingIDs.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1)));
 						
-						filingIDs.remove(pairs.get(cheapestpairIndex).substring(1,2));
+						filingIDs.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2)));
 						
-						filingIDs.remove(pairs.get(cheapestpairIndex).substring(2,3));
+						filingIDs.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(2,3)));
 						
-						filingRails.remove(pairs.get(cheapestpairIndex).substring(2,3));
-						filingRails.remove(pairs.get(cheapestpairIndex).substring(1,2));
-						filingRails.remove(pairs.get(cheapestpairIndex).substring(0,1));
-						filingDrawers.remove(pairs.get(cheapestpairIndex).substring(2,3));
-						filingDrawers.remove(pairs.get(cheapestpairIndex).substring(1,2));
-						filingDrawers.remove(pairs.get(cheapestpairIndex).substring(0,1));
-						filingCabinets.remove(pairs.get(cheapestpairIndex).substring(2,3));
-						filingCabinets.remove(pairs.get(cheapestpairIndex).substring(1,2));
-						filingCabinets.remove(pairs.get(cheapestpairIndex).substring(0,1));
-						filingPrices.remove(pairs.get(cheapestpairIndex).substring(2,3));
-						filingPrices.remove(pairs.get(cheapestpairIndex).substring(1,2));
-						filingPrices.remove(pairs.get(cheapestpairIndex).substring(0,1));
+						filingRails.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(2,3)));
+						filingRails.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2)));
+						filingRails.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1)));
+						filingDrawers.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(2,3)));
+						filingDrawers.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2)));
+						filingDrawers.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1)));
+						filingCabinets.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(2,3)));
+						filingCabinets.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2)));
+						filingCabinets.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1)));
+						filingPrices.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(2,3)));
+						filingPrices.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2)));
+						filingPrices.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1)));
 						pairs.clear();
 						quantity-=1;
 					

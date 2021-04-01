@@ -145,7 +145,7 @@ public class DeskSupply{
 			if(pairs.size() != 0) {
 				for( int i =0; i< pairs.size(); i++) {
 					if(deskPrices.get(Integer.parseInt(pairs.get(i))) < cheapestpair) {
-						cheapestpair = deskPrices.get(Integer.parseInt(pairs.get(i).substring(0,1))) + deskPrices.get(Integer.parseInt(pairs.get(i).substring(1,2)));
+						cheapestpair = deskPrices.get(Integer.parseInt(pairs.get(i)));
 						cheapestpairIndex = i;
 					}
 				}
@@ -158,15 +158,15 @@ public class DeskSupply{
 					return errorMessage();
 				}
 					
-				deskIDs.remove(pairs.get(cheapestpairIndex));
+				deskIDs.remove(Integer.parseInt(pairs.get(cheapestpairIndex)));
 				if(deskIDs.size()==0){
 					
 					return errorMessage();
 				}
-				deskLegs.remove(pairs.get(cheapestpairIndex));
-				deskTops.remove(pairs.get(cheapestpairIndex));
-				deskDrawers.remove(pairs.get(cheapestpairIndex));
-				deskPrices.remove(pairs.get(cheapestpairIndex));
+				deskLegs.remove(Integer.parseInt(pairs.get(cheapestpairIndex)));
+				deskTops.remove(Integer.parseInt(pairs.get(cheapestpairIndex)));
+				deskDrawers.remove(Integer.parseInt(pairs.get(cheapestpairIndex)));
+				deskPrices.remove(Integer.parseInt(pairs.get(cheapestpairIndex)));
 				pairs.clear();
 				
 				quantity-=1;
@@ -256,24 +256,24 @@ public class DeskSupply{
 						totalcost += deskPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1))) + deskPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2))) + deskPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(2,3)));
 						
 						
-						deskIDs.remove(pairs.get(cheapestpairIndex).substring(0,1));
+						deskIDs.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1)));
 						
-						deskIDs.remove(pairs.get(cheapestpairIndex).substring(1,2));
+						deskIDs.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2)));
 						
-						deskIDs.remove(pairs.get(cheapestpairIndex).substring(2,3));
+						deskIDs.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(2,3)));
 						
-						deskLegs.remove(pairs.get(cheapestpairIndex).substring(2,3));
-						deskLegs.remove(pairs.get(cheapestpairIndex).substring(1,2));
-						deskLegs.remove(pairs.get(cheapestpairIndex).substring(0,1));
-						deskTops.remove(pairs.get(cheapestpairIndex).substring(2,3));
-						deskTops.remove(pairs.get(cheapestpairIndex).substring(1,2));
-						deskTops.remove(pairs.get(cheapestpairIndex).substring(0,1));
-						deskDrawers.remove(pairs.get(cheapestpairIndex).substring(2,3));
-						deskDrawers.remove(pairs.get(cheapestpairIndex).substring(1,2));
-						deskDrawers.remove(pairs.get(cheapestpairIndex).substring(0,1));
-						deskPrices.remove(pairs.get(cheapestpairIndex).substring(2,3));
-						deskPrices.remove(pairs.get(cheapestpairIndex).substring(1,2));
-						deskPrices.remove(pairs.get(cheapestpairIndex).substring(0,1));
+						deskLegs.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(2,3)));
+						deskLegs.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2)));
+						deskLegs.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1)));
+						deskTops.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(2,3)));
+						deskTops.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2)));
+						deskTops.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1)));
+						deskDrawers.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(2,3)));
+						deskDrawers.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2)));
+						deskDrawers.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1)));
+						deskPrices.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(2,3)));
+						deskPrices.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2)));
+						deskPrices.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1)));
 						pairs.clear();
 						quantity-=1;
 					
