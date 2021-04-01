@@ -90,7 +90,7 @@ public class DeskSupply{
 	    
 		int cheapestpair=10000;
 		int cheapestpairIndex =0;
-		
+		initializeConnection();
 		
 		try {                    
             Statement myStmt = dbConnect.createStatement();
@@ -312,7 +312,7 @@ public class DeskSupply{
     }
 	public static void main(String[] args) {
 		DeskSupply myJDBC = new DeskSupply("jdbc:mysql://localhost/inventory","root","82he9os12");
-        myJDBC.initializeConnection();
+        
         
 		
 		

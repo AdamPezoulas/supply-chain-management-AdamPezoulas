@@ -93,6 +93,7 @@ public class FilingSupply{
 	 
 		int cheapestpair=10000;
 		int cheapestpairIndex =0;
+		initializeConnection();
 		
 		try {                    
             Statement myStmt = dbConnect.createStatement();
@@ -317,7 +318,7 @@ public class FilingSupply{
     }
 	public static void main(String[] args) {
 		FilingSupply myJDBC = new FilingSupply("jdbc:mysql://localhost/inventory","root","82he9os12");
-        myJDBC.initializeConnection();
+        
         
 		System.out.println(Arrays.toString(myJDBC.cheapestFiling("Large", 2)));
 	
