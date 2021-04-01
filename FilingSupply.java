@@ -1,5 +1,8 @@
+package edu.ucalgary.ensf409;
+
 import java.sql.*;
 import java.util.*;  
+
 
 public class FilingSupply{
 	
@@ -18,7 +21,7 @@ public class FilingSupply{
 	public static ArrayList<Integer> filingPrices = new ArrayList<Integer>();
 	public static ArrayList<String> BuyList = new ArrayList<String>();
 	public static ArrayList<String> pairs = new ArrayList<String>();
-	
+	public static ArrayList<String> filingManufacturers = new ArrayList<String>();
 	
 	public String[] getbuyList() {
 		String[] Buy = new String[BuyList.size()+1];
@@ -39,12 +42,57 @@ public class FilingSupply{
 		this.PASSWORD = PASSWORD;
 	}
 	
+	public String[] errorMessage() {
+		
+		
+		
+		ArrayList<String> newfilingManufacturers = new ArrayList<String>();
+		String[] errorM=new String[2];
+		for (int i =0;i<filingManufacturers.size(); i++){
+				if(!newfilingManufacturers.contains(filingManufacturers.get(i))) {
+					newfilingManufacturers.add(filingManufacturers.get(i));
+				}
+			}
+		
+		for(int i =0;i < newfilingManufacturers.size();i++) {
+		
+			try {                    
+				Statement myStmt = dbConnect.createStatement();
+				results = myStmt.executeQuery("SELECT * FROM manufacturer ");	
+				
+			
+			
+				while (results.next()){
+					if(results.getString("ManuID").equals(newfilingManufacturers.get(i))) {
+						newfilingManufacturers.set(i, results.getString("Name"));
+					}
+				}
+			 
+			 myStmt.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		StringBuilder error = new StringBuilder();
+		for (int i = 0; i < newfilingManufacturers.size(); i++) {
+			if(i < newfilingManufacturers.size()-1) {
+				error.append(newfilingManufacturers.get(i) +", ");
+			}
+			else {
+				error.append(newfilingManufacturers.get(i));
+			}
+		}
+		errorM[0] = error.toString();
+		errorM[1] = "-1";
+		
+		return errorM;
+	}
+	
 	public String[] cheapestFiling ( String Type, int quantity) {
 		
-	    String[] error = {"The request cannot be filled. Suggested manufacturers: Office Furnishings, Furniture Goods and Fine Office Supplies.", "-1"};
+	 
 		int cheapestpair=10000;
 		int cheapestpairIndex =0;
-		
 		
 		try {                    
             Statement myStmt = dbConnect.createStatement();
@@ -70,6 +118,7 @@ public class FilingSupply{
 						filingDrawers.add(results.getString("Drawers"));
 						filingCabinets.add(results.getString("Cabinet"));
 						filingPrices.add(results.getInt("Price"));	
+						filingManufacturers.add(results.getString("ManuID"));
 						
 					}
 					
@@ -81,7 +130,8 @@ public class FilingSupply{
 			}
 			
 			
-					
+			
+				
 			
 			
 			
@@ -109,13 +159,13 @@ public class FilingSupply{
 				totalcost += filingPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex)));
 				if(filingIDs.size()==0){
 						
-					return error;
+					
 				}
 					
 				filingIDs.remove(pairs.get(cheapestpairIndex));
 				if(filingIDs.size()==0){
 					
-					return error;
+					
 				}
 				filingRails.remove(pairs.get(cheapestpairIndex));
 				filingDrawers.remove(pairs.get(cheapestpairIndex));
@@ -151,14 +201,14 @@ public class FilingSupply{
 					totalcost += filingPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1))) + filingPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2)));
 					
 					if(filingIDs.size()==0){
+						return errorMessage();
 					
-					return error;
 					}
 					filingIDs.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2)));
 					
 					if(filingIDs.size()==0){
+						return errorMessage();
 					
-					return error;
 					}	
 					filingIDs.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1)));
 					
@@ -189,7 +239,8 @@ public class FilingSupply{
 						}		
 					}	
 					if(pairs.size() == 0) {
-						return error;
+						
+						return errorMessage();
 						
 					}
 					else if (pairs.size() != 0) {
@@ -268,9 +319,8 @@ public class FilingSupply{
 		FilingSupply myJDBC = new FilingSupply("jdbc:mysql://localhost/inventory","root","82he9os12");
         myJDBC.initializeConnection();
         
-		
-		
-		System.out.println(Arrays.toString(myJDBC.cheapestFiling("Small", 1)));
+		System.out.println(Arrays.toString(myJDBC.cheapestFiling("Large", 2)));
+	
 		
     }
 }

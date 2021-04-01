@@ -1,3 +1,5 @@
+package edu.ucalgary.ensf409;
+
 import java.sql.*;
 import java.util.*;  
 
@@ -18,7 +20,7 @@ public class DeskSupply{
 	public static ArrayList<Integer> deskPrices = new ArrayList<Integer>();
 	public static ArrayList<String> BuyList = new ArrayList<String>();
 	public static ArrayList<String> pairs = new ArrayList<String>();
-	
+	public static ArrayList<String> deskManufacturers = new ArrayList<String>();
 	
 	public String[] getbuyList() {
 		String[] Buy = new String[BuyList.size()+1];
@@ -31,7 +33,51 @@ public class DeskSupply{
 		return Buy;
 	}
 	
-	
+	public String[] errorMessage() {
+		
+		
+		
+		ArrayList<String> newdeskManufacturers = new ArrayList<String>();
+		String[] errorM=new String[2];
+		for (int i =0;i<deskManufacturers.size(); i++){
+				if(!newdeskManufacturers.contains(deskManufacturers.get(i))) {
+					newdeskManufacturers.add(deskManufacturers.get(i));
+				}
+			}
+		
+		for(int i =0;i < newdeskManufacturers.size();i++) {
+		
+			try {                    
+				Statement myStmt = dbConnect.createStatement();
+				results = myStmt.executeQuery("SELECT * FROM manufacturer ");	
+				
+			
+			
+				while (results.next()){
+					if(results.getString("ManuID").equals(newdeskManufacturers.get(i))) {
+						newdeskManufacturers.set(i, results.getString("Name"));
+					}
+				}
+			 
+			 myStmt.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
+			}
+		}
+		StringBuilder error = new StringBuilder();
+		for (int i = 0; i < newdeskManufacturers.size(); i++) {
+			if(i < newdeskManufacturers.size()-1) {
+				error.append(newdeskManufacturers.get(i) +", ");
+			}
+			else {
+				error.append(newdeskManufacturers.get(i));
+			}
+		}
+		errorM[0] = error.toString();
+		errorM[1] = "-1";
+		
+		return errorM;
+	}
 	
 	public DeskSupply(String DBURL, String USERNAME, String PASSWORD) {
 		this.DBURL = DBURL;
@@ -41,7 +87,7 @@ public class DeskSupply{
 	
 	public String[] cheapestDesk ( String Type, int quantity) {
 		
-	    String[] error = {"The request cannot be filled. Suggested manufacturers: Academic Desks, Office Furnishings, Furniture Goods and Fine Office Supplies.", "-1"};
+	    
 		int cheapestpair=10000;
 		int cheapestpairIndex =0;
 		
@@ -70,7 +116,7 @@ public class DeskSupply{
 							deskTops.add(results.getString("Top"));
 							deskDrawers.add(results.getString("Drawer"));
 							deskPrices.add(results.getInt("Price"));	
-							
+							deskManufacturers.add(results.getString("ManuID"));
 						}
 					
 				}
@@ -109,13 +155,13 @@ public class DeskSupply{
 				totalcost += deskPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex)));
 				if(deskIDs.size()==0){
 						
-					return error;
+					return errorMessage();
 				}
 					
 				deskIDs.remove(pairs.get(cheapestpairIndex));
 				if(deskIDs.size()==0){
 					
-					return error;
+					return errorMessage();
 				}
 				deskLegs.remove(pairs.get(cheapestpairIndex));
 				deskTops.remove(pairs.get(cheapestpairIndex));
@@ -152,13 +198,13 @@ public class DeskSupply{
 					
 					if(deskIDs.size()==0){
 					
-					return error;
+					return errorMessage();
 					}
 					deskIDs.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2)));
 					
 					if(deskIDs.size()==0){
 					
-					return error;
+					return errorMessage();
 					}	
 					deskIDs.remove(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1)));
 					
@@ -189,7 +235,7 @@ public class DeskSupply{
 						}		
 					}	
 					if(pairs.size() == 0) {
-						return error;
+						return errorMessage();
 						
 					}
 					else if (pairs.size() != 0) {
@@ -270,7 +316,7 @@ public class DeskSupply{
         
 		
 		
-		System.out.println(Arrays.toString(myJDBC.cheapestDesk("Adjustable", 2)));
+		System.out.println(Arrays.toString(myJDBC.cheapestDesk("Adjustable", 5)));
 		
     }
 }
