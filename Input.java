@@ -40,6 +40,8 @@ public static void acceptOrder() {
 		System.out.println("Please enter number of chair(s) you would like to purchase");
 		//storing amount of furniture being requested in variable called number
 		number = scan.nextInt();
+		getCheapest(List<Chair> chairs);
+		//Calling function to find cheapest chair
 	}
 	//checking to see if user requested desk 
 	if(category.equals("desk"))
@@ -51,6 +53,8 @@ public static void acceptOrder() {
 		System.out.println("Please enter number of desk(s) you would like to purchase");
 		//storing amount of furniture being requested in variable called number
 		number = scan.nextInt();
+		//Calling function to find cheapest desk
+		cheapestDesk (String type, int number);
 	}
 	//checking to see if user requested filing 
 	if(category.equals("filing"))
@@ -62,6 +66,8 @@ public static void acceptOrder() {
 		System.out.println("Please enter number of filling(s)");
 		//storing amount of furniture being requested in variable called number
 		number = scan.nextInt();
+		//Calling function to find cheapest filing
+		cheapestFiling (String type, int number);
 	}
 	//checking to see if user requested lamp
 	if(category.equals("lamp"))
@@ -73,6 +79,8 @@ public static void acceptOrder() {
 		System.out.println("Please enter number of lamp(s) you would like to purchase");
 		//storing amount of furniture being requested in variable called number
 		number = scan.nextInt();
+		//Calling function to find cheapest lamp
+		getCheapest(List<Lamp> lamps);
 	}
 	
   }
