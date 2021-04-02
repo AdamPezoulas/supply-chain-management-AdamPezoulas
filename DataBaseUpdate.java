@@ -1,4 +1,11 @@
 /**
+ * @author Braden Foley <a href="mailto:braden.foley@ucalgary.ca">
+ *         braden.foley@ucalgary.ca</a>
+ * 
+ * @version 1.3
+ * 
+ * @since 1.0
+ * 
  * This program updates the database based on what the user has successfully
  * ordered
  */

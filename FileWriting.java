@@ -1,4 +1,11 @@
 /**
+ * @author Braden Foley <a href="mailto:braden.foley@ucalgary.ca">
+ *         braden.foley@ucalgary.ca</a>
+ * 
+ * @version 1.5
+ * 
+ * @since 1.0
+ * 
  * This program gets data from findCheapest program in order to give the user a formated summary of their request.
  */
 
