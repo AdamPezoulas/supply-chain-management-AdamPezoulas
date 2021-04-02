@@ -17,6 +17,10 @@ public class FindCheapestLamp
 		/** 
 		Constructor that assigns database properties, order type, and number
 		Creates a connection to the database as well
+		
+		@param 	dburl	URL of desired database
+		@param	user	username to access the database
+		@param 	
 		*/
 		this.DBURL = dburl;
 		this.USERNAME = user;

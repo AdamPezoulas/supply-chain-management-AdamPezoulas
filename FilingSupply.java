@@ -1,4 +1,4 @@
-package edu.ucalgary.ensf409;
+
 
 import java.sql.*;
 import java.util.*;  
@@ -47,7 +47,6 @@ public class FilingSupply{
 		
 		
 		ArrayList<String> newfilingManufacturers = new ArrayList<String>();
-		String[] errorM=new String[2];
 		for (int i =0;i<filingManufacturers.size(); i++){
 				if(!newfilingManufacturers.contains(filingManufacturers.get(i))) {
 					newfilingManufacturers.add(filingManufacturers.get(i));
@@ -64,7 +63,7 @@ public class FilingSupply{
 			
 				while (results.next()){
 					if(results.getString("ManuID").equals(newfilingManufacturers.get(i))) {
-						newfilingManufacturers.set(i, results.getString("Name"));
+						newfilingManufacturers.set(i, results.getString("ManuID"));
 					}
 				}
 			 
@@ -73,19 +72,12 @@ public class FilingSupply{
 				ex.printStackTrace();
 			}
 		}
-		StringBuilder error = new StringBuilder();
-		for (int i = 0; i < newfilingManufacturers.size(); i++) {
-			if(i < newfilingManufacturers.size()-1) {
-				error.append(newfilingManufacturers.get(i) +", ");
-			}
-			else {
-				error.append(newfilingManufacturers.get(i));
-			}
-		}
-		errorM[0] = error.toString();
-		errorM[1] = "-1";
 		
-		return errorM;
+	
+		newfilingManufacturers.add("-1");
+		String[] errorM = new String[newfilingManufacturers.size()];
+		
+		return newfilingManufacturers.toArray(errorM);
 	}
 	
 	public String[] cheapestFiling ( String Type, int quantity) {
@@ -316,10 +308,10 @@ public class FilingSupply{
         }
     }
 	public static void main(String[] args) {
-		FilingSupply myJDBC = new FilingSupply("jdbc:mysql://localhost/inventory","root","82he9os12");
+		FilingSupply myJDBC = new FilingSupply("jdbc:mysql://localhost/inventory","adam","ENSF409");
         myJDBC.initializeConnection();
         
-		System.out.println(Arrays.toString(myJDBC.cheapestFiling("Large", 2)));
+		System.out.println(Arrays.toString(myJDBC.cheapestFiling("Large", 8)));
 	
 		
     }

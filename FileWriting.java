@@ -1,7 +1,7 @@
 /**
  * This program gets data from findCheapest program in order to give the user a formated summary of their request.
  */
-package edu.ucalgary.ensf409;
+
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

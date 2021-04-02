@@ -2,7 +2,7 @@
  * This program updates the database based on what the user has successfully
  * ordered
  */
-package edu.ucalgary.ensf409;
+
 
 import java.sql.*;
 

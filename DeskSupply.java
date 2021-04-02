@@ -1,4 +1,4 @@
-package edu.ucalgary.ensf409;
+
 
 import java.sql.*;
 import java.util.*;  
@@ -38,7 +38,6 @@ public class DeskSupply{
 		
 		
 		ArrayList<String> newdeskManufacturers = new ArrayList<String>();
-		String[] errorM=new String[2];
 		for (int i =0;i<deskManufacturers.size(); i++){
 				if(!newdeskManufacturers.contains(deskManufacturers.get(i))) {
 					newdeskManufacturers.add(deskManufacturers.get(i));
@@ -55,7 +54,7 @@ public class DeskSupply{
 			
 				while (results.next()){
 					if(results.getString("ManuID").equals(newdeskManufacturers.get(i))) {
-						newdeskManufacturers.set(i, results.getString("Name"));
+						newdeskManufacturers.set(i, results.getString("ManuID"));
 					}
 				}
 			 
@@ -64,19 +63,11 @@ public class DeskSupply{
 				ex.printStackTrace();
 			}
 		}
-		StringBuilder error = new StringBuilder();
-		for (int i = 0; i < newdeskManufacturers.size(); i++) {
-			if(i < newdeskManufacturers.size()-1) {
-				error.append(newdeskManufacturers.get(i) +", ");
-			}
-			else {
-				error.append(newdeskManufacturers.get(i));
-			}
-		}
-		errorM[0] = error.toString();
-		errorM[1] = "-1";
 		
-		return errorM;
+		newdeskManufacturers.add("-1");
+		String[] errorM = new String[newdeskManufacturers.size()];
+		
+		return newdeskManufacturers.toArray(errorM);
 	}
 	
 	public DeskSupply(String DBURL, String USERNAME, String PASSWORD) {
