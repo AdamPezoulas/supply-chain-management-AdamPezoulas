@@ -26,7 +26,9 @@ public class FindCheapestChairTest
 	static final String PASS = "ENSF409";
 
   @Test
-  // Test to source 1 Mesh Chair
+    /**
+ * Test to make sure cheapest combination of 1 chair is chosen
+ */
   public void testSource1MeshChair()
   {
     FindCheapestChair test = new FindCheapestChair(DBURL,USER,PASS,"Mesh",1);
@@ -39,11 +41,14 @@ public class FindCheapestChairTest
 	String[] expected = new String[] {"C9890", "C8138", "C6748", "200"};
 
     // See if the arrays are the same
-    assertTrue("Did not return cheapest Chair combination", Arrays.equals(returned, expected));
+    assertTrue("Did not return cheapest Chair combination for 1 mesh chair", Arrays.equals(returned, expected));
   }
   
     @Test
-  // Test to find 2 Mesh chairs, expecting failure
+  /**
+ * Test to make sure cheapest combination of 2 chairs is chosen
+ * expecting ManuIDs to be returned
+ */
   public void testSource2MeshChair()
   {
     FindCheapestChair test = new FindCheapestChair(DBURL,USER,PASS,"Mesh",2);
@@ -56,11 +61,13 @@ public class FindCheapestChairTest
 	String[] expected = new String[] {"002", "003", "004", "005", "-1"};
 
     // See if the arrays are the same
-    assertTrue("Did not return cheapest Chair combination", Arrays.equals(returned, expected));
+    assertTrue("Did not return ManuIDs when sourcing 2 mesh chairs", Arrays.equals(returned, expected));
   }
   
       @Test
-  // Test to find 1 Kneeling chair, expecting failure
+  /**
+ * Test to make sure cheapest combination of 1 kneeling chair is chosen
+ */
   public void testSource1KneelingChair()
   {
     FindCheapestChair test = new FindCheapestChair(DBURL,USER,PASS,"Kneeling",1);
@@ -73,11 +80,13 @@ public class FindCheapestChairTest
 	String[] expected = new String[] {"002", "003", "004", "005", "-1"};
 
     // See if the arrays are the same
-    assertTrue("Did not return cheapest Chair combination", Arrays.equals(returned, expected));
+    assertTrue("Did not return ManuIDs when requesting 1 Kneeling chair", Arrays.equals(returned, expected));
   }
   
         @Test
-  // Test to find 1 Executive
+  /**
+ * Test to make sure cheapest combination of 1 executive chair is chosen
+ */
   public void testSource1ExecutiveChair()
   {
     FindCheapestChair test = new FindCheapestChair(DBURL,USER,PASS,"Executive",1);
@@ -90,7 +99,7 @@ public class FindCheapestChairTest
 	String[] expected = new String[] {"C7268", "C5784", "C2483", "400"};
 
     // See if the arrays are the same
-    assertTrue("Did not return cheapest Chair combination", Arrays.equals(returned, expected));
+    assertTrue("Did not return cheapest Chair combination for 1 executive chair", Arrays.equals(returned, expected));
   }
   
   

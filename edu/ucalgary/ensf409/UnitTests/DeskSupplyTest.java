@@ -24,7 +24,9 @@ public class DeskSupplyTest
 	static final String PASS = "ENSF409";
 
   @Test
-  // Test to source 1 Adjustable Desk
+  /**
+ * Test to make sure cheapest combination of 1 desk is chosen
+ */
   public void testSource1AdjustableDesk()
   {
 	  //create filing supply object to test
@@ -38,11 +40,13 @@ public class DeskSupplyTest
 
 	String[] expected = new String[] {"D1030","D2746", "400"};
     // See if the arrays are the same
-    assertTrue("Did not return cheapest Desk combination", Arrays.equals(returned, expected));
+    assertTrue("Did not return cheapest Desk combination for 1 adjustable desk", Arrays.equals(returned, expected));
   }
 
   @Test
-  // Test to source 1 Adjustable Desk
+    /**
+ * Test to make sure cheapest combination of 2 desks is chosen
+ */
   public void testSource2AdjustableDesk()
   {
 	  //create filing supply object to test
@@ -56,11 +60,13 @@ public class DeskSupplyTest
 
 	String[] expected = new String[] {"D1030", "D2746", "D3682", "D7373", "800"};
     // See if the arrays are the same
-    assertTrue("Did not return cheapest Desk combination", Arrays.equals(returned, expected));
+    assertTrue("Did not return cheapest Desk combination for 2 adjustable desks", Arrays.equals(returned, expected));
   }
   
     @Test
-  // Test to source 3 Adjustable Desk
+    /**
+ * Test to make sure cheapest combination of 3 desks is chosen
+ */
   public void testSource3AdjustableDesk()
   {
 	  //create filing supply object to test
@@ -74,11 +80,14 @@ public class DeskSupplyTest
 
 	String[] expected = new String[] {"D1030", "D2746", "D3682", "D7373", "D4475", "D5437", "1200"};
     // See if the arrays are the same
-    assertTrue("Did not return cheapest Desk combination", Arrays.equals(returned, expected));
+    assertTrue("Did not return cheapest Desk combination for 3 adjustable desks", Arrays.equals(returned, expected));
   }
   
     @Test
-  // Test to source 4 Adjustable Desk, expecting failure
+    /**
+ * Test to make sure cheapest combination of 4 desk is chosen
+ * Not a possible combination, so expecting ManuIDs returned
+ */
   public void testSource4AdjustableDesk()
   {
 	  //create filing supply object to test
@@ -93,11 +102,13 @@ public class DeskSupplyTest
 	
 	String[] expected = new String[] {"002", "004", "005","001","-1"};
     // See if the arrays are the same
-    assertTrue("Did not return cheapest Desk combination", Arrays.equals(returned, expected));
+    assertTrue("Did not return ManuIDs for 4 Adjustable desks", Arrays.equals(returned, expected));
   }
   
     @Test
-  // Test to source 2 Standing Desk
+   /**
+ * Test to make sure cheapest combination of 2 standing desks is chosen
+ */
   public void testSource2StandingDesk()
   {
 	  //create filing supply object to test
@@ -112,7 +123,7 @@ public class DeskSupplyTest
 	
 	String[] expected = new String[] {"D1927", "D2341", "D3820", "D4438", "600"};
     // See if the arrays are the same
-    assertTrue("Did not return cheapest Desk combination", Arrays.equals(returned, expected));
+    assertTrue("Did not return cheapest Desk combination for 2 standing desks", Arrays.equals(returned, expected));
   }
 }
 

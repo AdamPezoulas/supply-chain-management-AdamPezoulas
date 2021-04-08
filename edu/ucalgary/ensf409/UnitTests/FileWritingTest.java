@@ -12,8 +12,9 @@ public class FileWritingTest
 	private String location = "C:\\Users\\Pezfa\\Desktop\\HYL\\ProjectFork\\supply-chain-management-AdamPezoulas\\";
 	private String fileName = "OrderSummary.txt";
   @Test
-  // tests basic constructor and makes sure a file is created 
-  // when writeFile is ran with item IDs
+  /**
+ * Test to make sure that a file is created when given Item IDs
+ */
   public void testWriteFileBasic() 
   {
     
@@ -28,8 +29,9 @@ public class FileWritingTest
 	}
 	
 	@Test
-  // tests basic constructor and makes sure a file is created 
-  // when writeFile is ran with manufacturer IDs
+ /**
+ * Test to make sure file is created when given ManuIDs
+ */
   public void testWriteFileManuIDs() 
   {
     
@@ -44,7 +46,9 @@ public class FileWritingTest
 	}
 	
 	@Test
-  // tests to make sure item ids are written using typeWritten member
+  /**
+ * Test to make sure correct message is written when given Item IDs
+ */
   public void testItemsWritten() 
   {
     
@@ -59,7 +63,9 @@ public class FileWritingTest
 	}
 	
 		@Test
-  // tests to make sure Manu ids are written using typeWritten member
+  /**
+ * Test to make sure correct message is written when given ManuIDs
+ */
   public void testManuWritten() 
   {
     
