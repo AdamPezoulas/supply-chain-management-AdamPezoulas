@@ -1,3 +1,15 @@
+/**
+ * @author Adam Pezoulas <a href="mailto:adam.pezoulas@ucalgary.ca">
+ *         adam.pezoulas@ucalgary.ca</a>
+ * 
+ * @version 1.1
+ * 
+ * @since 1.0
+ * 
+ * This program selects the cheapest combination of lamps to complete an order
+ */
+package edu.ucalgary.ensf409;
+
 import java.sql.*;
 import java.util.*;
 
@@ -20,7 +32,9 @@ public class FindCheapestLamp
 		
 		@param 	dburl	URL of desired database
 		@param	user	username to access the database
-		@param 	
+		@param 	pass	Database password
+		@param 	type	type of lamp wanted
+		@param	number	number of complete lamps wanted
 		*/
 		this.DBURL = dburl;
 		this.USERNAME = user;
@@ -35,9 +49,10 @@ public class FindCheapestLamp
 	
 	private void initializeConnection()
 	{
-		/** 
-		Initializes the connection to the server and stores the connection 
-		*/
+		    /**
+     * Creates a connection to the database and stores the connection in dbconnect
+     * 
+     */
 		//connect to the given database using credentials
 		try{
             dbConnect = DriverManager.getConnection(DBURL, USERNAME, PASSWORD);
@@ -52,10 +67,12 @@ public class FindCheapestLamp
 	
 	public String[] sourceLamp()
 	{
-		/** 
-		Returns a String array of the IDs of the lamps used in the cheapest option and price at end
-		Returns the IDs of the possible manufacturers if there is no valid combination
-		*/
+		    /**
+     * Calls getCheapest the required number of times to create a string array
+     * 	of items required for purchase and total price
+     *
+     * @return an array of item IDs and final value is total price
+     */
 		
 		
 		
@@ -130,12 +147,14 @@ public class FindCheapestLamp
 		
 	}
 	
-	public String[] getCheapest(List<Lamp> lamps)
+	private String[] getCheapest(List<Lamp> lamps)
 	{
-		/** 
-		Finds the cheapest combination of lamps currently in the arrayList
-		Returns the ids of manufaturers if not valid combo is found
-		*/
+		    /**
+     * returns a string array with cheapest available lamps that complete 1 lamp
+	 * final value of array is total price of items 
+     * @param ArrayList of all available lamps
+     * @return array with IDs of lamps needed and total price at the end
+     */
 		
 		int min = 999999; //Initial value of min, larger than any expected value
 		String[] IDs = null;  //String array that will be returned
@@ -162,7 +181,7 @@ public class FindCheapestLamp
 				{
 					if( lamps.get(i).getBase().equals("Y") && lamps.get(j).getBulb().equals("Y"))
 					{
-						if(min >= lamps.get(i).getPrice() + lamps.get(j).getPrice())
+						if(min > lamps.get(i).getPrice() + lamps.get(j).getPrice())
 						{
 							min = lamps.get(i).getPrice() + lamps.get(j).getPrice();
 							IDs = new String[] {lamps.get(i).getID(), lamps.get(j).getID()};
@@ -185,9 +204,11 @@ public class FindCheapestLamp
 	
 	private void readData()
 	{
-		/** 
-		Places all the lamps of correct type in results
-		*/
+		    /**
+     * Creates an Array List of all lamps currently in database of desired type
+     * 
+     *
+     */
 		try {                    
             Statement state = dbConnect.createStatement();
             results = state.executeQuery("SELECT * FROM lamp WHERE Type = " + "\"" + type + "\"" );

@@ -8,7 +8,7 @@
  * 
  * This program gets data from findCheapest program in order to give the user a formated summary of their request.
  */
-
+package edu.ucalgary.ensf409;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -62,19 +62,29 @@ public class FileWriting {
             output.write("Faculty Name: \nContact: \nDate: \n\n"); // a fill in
             if (totalPrice > 0) {
                 output.write("Items Requested: " + type + ", " + quantity + "\n\n"); // writing the original request
+				System.out.println("\nItems Requested: " + type + ", " + quantity + "\n\n"); // writing the original request
                 output.write("Items Ordered\n");
+				System.out.println("Items Required\n");
                 for (int i = 0; i < ID.length; i++) { // outputting the ID for the inventory that is used
                     output.write("ID: " + ID[i] + "\n");
+					System.out.println("ID: " + ID[i] + "\n");
                 }
                 output.write("\nTotal Price: $" + totalPrice); // writing the totatl price
+				System.out.println("Total Price: $" + totalPrice); 
+				System.out.println("\nPlease see OrderSummary.txt to complete your order form");
             } else if (totalPrice == -1) { // in this case we know we couldn't meet the request requirements
                 output.write(
                         "We cannot fulfill your order with the provided requirements based on our current inventory.");
                 output.write(" We suggest you try contacting the following manufactures: \n");
+				System.out.println(
+                        "\nWe cannot fulfill your order with the provided requirements based on our current inventory.");
+                System.out.println("We suggest you try contacting the following manufactures: \n");
                 String[] manufactures = idToManufactures(ID);
                 for (int i = 0; i < manufactures.length; i++) {
                     output.write(manufactures[i] + "\n");
+					System.out.println(manufactures[i] + "\n");
                 }
+				System.out.println("\nPlease see OrderSummary.txt to complete your order form");
             } else {
                 System.err.println("Somthing went wrong in the totalPrice calculation!");
                 System.exit(1); // there was an error computing the total price

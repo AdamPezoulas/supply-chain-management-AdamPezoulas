@@ -1,4 +1,14 @@
-
+/**
+ * @author Adam Pezoulas <a href="mailto:adam.pezoulas@ucalgary.ca">
+ *         adam.pezoulas@ucalgary.ca</a>
+ * 
+ * @version 1.1
+ * 
+ * @since 1.0
+ * 
+ * Class to store Chair information
+ */
+ package edu.ucalgary.ensf409;
 public class Chair {
     // Persistent Fields:
     private String id;

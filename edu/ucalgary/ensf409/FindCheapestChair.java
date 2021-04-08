@@ -1,3 +1,14 @@
+/**
+ * @author Adam Pezoulas <a href="mailto:adam.pezoulas@ucalgary.ca">
+ *         adam.pezoulas@ucalgary.ca</a>
+ * 
+ * @version 1.3
+ * 
+ * @since 1.0
+ * 
+ * This program selects the cheapest combination of chairs to complete an order
+ */
+ package edu.ucalgary.ensf409;
 import java.sql.*;
 import java.util.*;
 
@@ -17,6 +28,12 @@ public class FindCheapestChair
 		/** 
 		Constructor that assigns database properties, order type, and number
 		Creates a connection to the database as well
+		
+		@param 	dburl	URL of desired database
+		@param	user	username to access the database
+		@param 	pass	Database password
+		@param 	type	type of chair wanted
+		@param	number	number of complete chairs wanted
 		*/
 		this.DBURL = dburl;
 		this.USERNAME = user;
@@ -48,11 +65,12 @@ public class FindCheapestChair
 	
 	public String[] sourceChair()
 	{
-		/** 
-		Returns a String array of the IDs of the chairs used in the cheapest option and price at end
-		Returns the IDs of the possible manufacturers if there is no valid combination
-		*/
-		
+		  /**
+     * Calls getCheapest the required number of times to create a string array
+     * 	of items required for purchase and total price
+     *
+     * @return an array of item IDs and final value is total price
+     */
 		
 		
 		int cost = 0; //cost of all the chairs
@@ -128,10 +146,12 @@ public class FindCheapestChair
 	
 	public String[] getCheapest(List<Chair> chairs)
 	{
-		/** 
-		Finds the cheapest combination of chairs currently in the arrayList
-		Returns the ids of manufaturers if not valid combo is found
-		*/
+		   /**
+     * returns a string array with cheapest available cahirs that complete 1 chair
+	 * final value of array is total price of items 
+     * @param ArrayList of all available chairs
+     * @return array with IDs of chairs needed and total price at the end
+     */
 		
 		int min = 999999; //Initial value of min, larger than any expected value
 		String[] IDs = null;  //String array that will be returned
@@ -211,9 +231,11 @@ public class FindCheapestChair
 	
 	private void readData()
 	{
-		/** 
-		Places all the chairs of correct type in results
-		*/
+		  /**
+     * Creates an Array List of all chairs currently in database of desired type
+     * 
+     *
+     */
 		try {                    
             Statement state = dbConnect.createStatement();
             results = state.executeQuery("SELECT * FROM chair WHERE Type = " + "\"" + type + "\"" );
@@ -243,7 +265,9 @@ public class FindCheapestChair
 	public boolean checkValid(Chair[] input)
 	{
 		/** 
-		Checks to see if the chair combination in the array has all the needed parts
+		*Checks array of chairs to see if it contains a valid combination
+		* @param Array of chairs
+		* @return boolean of if chairs contain all required parts
 		*/
 		
 		//stores specific part information
