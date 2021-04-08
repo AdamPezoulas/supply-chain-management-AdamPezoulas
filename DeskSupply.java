@@ -1,18 +1,30 @@
-package edu.ucalgary.ensf409;
+/**
+ * @author Robert Dewar <a href="mailto:robert.dewar@ucalgary.ca">
+ *         robert.dewar@ucalgary.ca</a>
+ * 
+ * @version 1.3
+ * 
+ * @since 1.0
+ * 
+ * This program recieves an order for desks and selects the cheapest combination of parts to build them
+ */
 
 import java.sql.*;
 import java.util.*;  
 
 public class DeskSupply{
 	
-	public final String DBURL; 
-    public final String USERNAME; 
-    public final String PASSWORD;
-	public Connection dbConnect;
+	public final String DBURL; //stores the database URL
+    public final String USERNAME; //stores the user's username
+    public final String PASSWORD; //stores the user's password
+	public Connection dbConnect; 
 	public ResultSet results;
 	public Boolean check = false;
 	public int totalcost=0;
 	
+	/** 
+	*Arraylists to store the database information
+	*/
 	public static ArrayList<String> deskIDs = new ArrayList<String>();
 	public static ArrayList<String> deskLegs = new ArrayList<String>();
 	public static ArrayList<String> deskTops = new ArrayList<String>();
@@ -21,6 +33,10 @@ public class DeskSupply{
 	public static ArrayList<String> BuyList = new ArrayList<String>();
 	public static ArrayList<String> pairs = new ArrayList<String>();
 	public static ArrayList<String> deskManufacturers = new ArrayList<String>();
+	
+	/** 
+	*method to generate a string of the purchased furniture items
+	*/
 	
 	public String[] getbuyList() {
 		String[] Buy = new String[BuyList.size()+1];
@@ -33,12 +49,14 @@ public class DeskSupply{
 		return Buy;
 	}
 	
+	/** 
+	*method to generate an out of stock message with the relevant manufacturers
+	*/
 	public String[] errorMessage() {
 		
 		
 		
 		ArrayList<String> newdeskManufacturers = new ArrayList<String>();
-		String[] errorM=new String[2];
 		for (int i =0;i<deskManufacturers.size(); i++){
 				if(!newdeskManufacturers.contains(deskManufacturers.get(i))) {
 					newdeskManufacturers.add(deskManufacturers.get(i));
@@ -55,7 +73,7 @@ public class DeskSupply{
 			
 				while (results.next()){
 					if(results.getString("ManuID").equals(newdeskManufacturers.get(i))) {
-						newdeskManufacturers.set(i, results.getString("Name"));
+						newdeskManufacturers.set(i, results.getString("ManuID"));
 					}
 				}
 			 
@@ -64,20 +82,16 @@ public class DeskSupply{
 				ex.printStackTrace();
 			}
 		}
-		StringBuilder error = new StringBuilder();
-		for (int i = 0; i < newdeskManufacturers.size(); i++) {
-			if(i < newdeskManufacturers.size()-1) {
-				error.append(newdeskManufacturers.get(i) +", ");
-			}
-			else {
-				error.append(newdeskManufacturers.get(i));
-			}
-		}
-		errorM[0] = error.toString();
-		errorM[1] = "-1";
 		
-		return errorM;
+		newdeskManufacturers.add("-1");
+		String[] errorM = new String[newdeskManufacturers.size()];
+		
+		return newdeskManufacturers.toArray(errorM);
 	}
+	
+	/** 
+	*constructor to set user variables
+	*/
 	
 	public DeskSupply(String DBURL, String USERNAME, String PASSWORD) {
 		this.DBURL = DBURL;
@@ -85,17 +99,25 @@ public class DeskSupply{
 		this.PASSWORD = PASSWORD;
 	}
 	
+	/** 
+	*method to calculate a combination of cheapest possible desks
+	*/
+	
 	public String[] cheapestDesk ( String Type, int quantity) {
 		
+	
 	    
-		int cheapestpair=10000;
-		int cheapestpairIndex =0;
-		initializeConnection();
+		int cheapestpair=10000; //variable to store prices of cheapest group of indices from pairs arraylist
+		int cheapestpairIndex =0; //variable to store cheapest group of indices from pairs arraylist
+		
 		
 		try {                    
             Statement myStmt = dbConnect.createStatement();
-            results = myStmt.executeQuery("SELECT * FROM desk ");
+            results = myStmt.executeQuery("SELECT * FROM desk ");//access desk table in database
 			
+			/** 
+			*initial block to fill arraylists with database info
+			*/
 			if ( check == false) {
 				deskIDs.clear();
 				deskLegs.clear();
@@ -129,8 +151,9 @@ public class DeskSupply{
 			
 					
 			
-			
-			
+			/** 
+			*block to store desks with all three parts available if any exist
+			*/
 			
 			for( int i =0; i< deskIDs.size(); i++) {
 				if((deskLegs.get(i).equals( "Y")) && (deskTops.get(i).equals( "Y"))&& (deskDrawers.get(i).equals( "Y"))) {
@@ -141,7 +164,9 @@ public class DeskSupply{
 			
 			
 			}
-			
+			/** 
+			*block to get cheapest set of desks with all parts available
+			*/
 			if(pairs.size() != 0) {
 				for( int i =0; i< pairs.size(); i++) {
 					if(deskPrices.get(Integer.parseInt(pairs.get(i))) < cheapestpair) {
@@ -150,7 +175,9 @@ public class DeskSupply{
 					}
 				}
 				
-				
+				/** 
+				*update all arraylists 
+				*/
 				BuyList.add(deskIDs.get(Integer.parseInt(pairs.get(cheapestpairIndex))));
 				totalcost += deskPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex)));
 				if(deskIDs.size()==0){
@@ -171,7 +198,9 @@ public class DeskSupply{
 				
 				quantity-=1;
 			}
-			
+			/** 
+			*block to store sets of two desks that contains all parts
+			*/
 			else if(pairs.size() ==0) {
 				for( int i =0; i< deskIDs.size(); i++) {
 					for( int j =i+1; j< deskIDs.size(); j++) {			
@@ -184,6 +213,9 @@ public class DeskSupply{
 									
 					}		
 				}
+				/** 
+				*block to get cheapest set of two desks
+				*/
 				if(pairs.size() !=0) {
 					for( int i =0; i< pairs.size(); i++) {
 						if(deskPrices.get(Integer.parseInt(pairs.get(i).substring(0,1))) + deskPrices.get(Integer.parseInt(pairs.get(i).substring(1,2))) < cheapestpair) {
@@ -191,7 +223,9 @@ public class DeskSupply{
 							cheapestpairIndex = i;
 						}
 					}
-					
+					/** 
+					*update all arraylists
+					*/
 					BuyList.add(deskIDs.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1))));
 					BuyList.add(deskIDs.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2))));
 					totalcost += deskPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1))) + deskPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2)));
@@ -222,6 +256,9 @@ public class DeskSupply{
 					
 					
 				}
+				/** 
+				*block to store sets of three desks that contains all parts
+				*/
 				else if(pairs.size() ==0) {
 					for( int i =0; i< deskIDs.size(); i++) {
 						for( int j =i+1; j< deskIDs.size(); j++) {			
@@ -234,10 +271,16 @@ public class DeskSupply{
 							}			
 						}		
 					}	
+					/** 
+					*return error message if no sets of three or less exist
+					*/
 					if(pairs.size() == 0) {
 						return errorMessage();
 						
 					}
+					/** 
+					*block to get cheapest set of three desks
+					*/
 					else if (pairs.size() != 0) {
 						for( int i =0; i< pairs.size(); i++) {
 							if(deskPrices.get(Integer.parseInt(pairs.get(i).substring(0,1))) + deskPrices.get(Integer.parseInt(pairs.get(i).substring(1,2))) + deskPrices.get(Integer.parseInt(pairs.get(i).substring(2,3))) < cheapestpair) {
@@ -245,7 +288,9 @@ public class DeskSupply{
 								cheapestpairIndex = i;
 							}
 						}
-						
+						/** 
+						*update all arraylists
+						*/
 						
 						BuyList.add(deskIDs.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1))));
 						
@@ -283,25 +328,34 @@ public class DeskSupply{
 				
 			}
 			
+			/** 
+			*if there is another desk requested, cheapestDesk is called again
+			*/
 			
 			if(quantity !=0) {
 				return cheapestDesk(Type, quantity);
 			}
 			
 			
-			
+			/** 
+			*close instance of database access
+			*/
             
             myStmt.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 		
-		
+		/** 
+		*return list of purchased desks
+		*/
 		check = false;	
 		return getbuyList();
 		
 	}
-	
+	/** 
+	*method to initialize database connection with login information
+	*/
 	public void initializeConnection(){
                 
         try{
@@ -310,9 +364,12 @@ public class DeskSupply{
             e.printStackTrace();
         }
     }
+	/** 
+	*main method
+	*/
 	public static void main(String[] args) {
 		DeskSupply myJDBC = new DeskSupply("jdbc:mysql://localhost/inventory","root","82he9os12");
-        
+        myJDBC.initializeConnection();
         
 		
 		
