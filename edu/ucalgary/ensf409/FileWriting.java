@@ -20,6 +20,8 @@ public class FileWriting {
     private String[] ID;
     private String filePath;
     private int totalPrice;
+	private String typeWritten; //used for testing to see if correct type of 
+								//message is written (manufacturers or items)
 
     /**
      * Default constructor
@@ -64,6 +66,9 @@ public class FileWriting {
                 output.write("Items Requested: " + type + ", " + quantity + "\n\n"); // writing the original request
 				System.out.println("\nItems Requested: " + type + ", " + quantity + "\n\n"); // writing the original request
                 output.write("Items Ordered\n");
+				
+				typeWritten = "Items";
+				
 				System.out.println("Items Required\n");
                 for (int i = 0; i < ID.length; i++) { // outputting the ID for the inventory that is used
                     output.write("ID: " + ID[i] + "\n");
@@ -80,6 +85,7 @@ public class FileWriting {
                         "\nWe cannot fulfill your order with the provided requirements based on our current inventory.");
                 System.out.println("We suggest you try contacting the following manufactures: \n");
                 String[] manufactures = idToManufactures(ID);
+				typeWritten = "Manufacturers";
                 for (int i = 0; i < manufactures.length; i++) {
                     output.write(manufactures[i] + "\n");
 					System.out.println(manufactures[i] + "\n");
@@ -128,6 +134,10 @@ public class FileWriting {
         return temp;
     }
 
+	public String getTypeWritten()
+	{
+		return this.typeWritten;
+	}
     public static void main(String[] args) {
         String id[] = { "001", "004", "005" };
         FileWriting writer = new FileWriting("test", 12, id, "C:\\ENSF409\\Final_Project\\edu\\ucalgary\\ensf409\\",
