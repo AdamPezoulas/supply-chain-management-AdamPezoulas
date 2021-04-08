@@ -3,6 +3,7 @@ Please compile all java files in edu/ucalgary/ensf409 using
 mysql-connector-java-8.0.23.jar in the lib folder, and run Input.java including the same connector. Command line examples are given below for Windows: 
 
 javac -cp .;lib/mysql-connector-java-8.0.23.jar; edu/ucalgary/ensf409/*.java
+
 java -cp .;lib/mysql-connector-java-8.0.23.jar; edu.ucalgary.ensf409.Input
 
 Please follow the prompts on screen to complete your order, inputs are case-sensitive.
