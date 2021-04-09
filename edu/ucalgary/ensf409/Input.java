@@ -44,7 +44,7 @@ public class Input {
 		// if statement for category select input validation
 		if( Arg.equals("category select")) {
 			
-			if(!Input.equals("chair") && !Input.equals("desk") && !Input.equals("filing") && !Input.equals("filing")) {
+			if(!Input.equals("chair") && !Input.equals("desk") && !Input.equals("filing") && !Input.equals("lamp")) {
 				System.out.println("Not a valid category selection. Please try again Or type quit to exit");
 				return false;
 			}	
