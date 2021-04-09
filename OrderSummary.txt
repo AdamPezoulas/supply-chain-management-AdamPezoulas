@@ -1,0 +1,13 @@
+Furniture Order Form Summary
+
+Faculty Name: 
+Contact: 
+Date: 
+
+Items Requested: Desk, 1
+
+Items Ordered
+ID: L013
+ID: L208
+
+Total Price: $20

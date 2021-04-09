@@ -41,6 +41,7 @@ public class Input {
 			System.out.println("Terminating program.");
 			System.exit(1);
 		}
+		
 		// if statement for category select input validation
 		if( Arg.equals("category select")) {
 			
@@ -258,6 +259,10 @@ public class Input {
 		FileWriting fileOut = new FileWriting(type, Integer.parseInt(number), IDsOnly, path, totalPrice);
 
 		fileOut.writeFile();
+		
+		DataBaseUpdate updater = new DataBaseUpdate("jdbc:mysql://localhost/inventory","adam","ENSF409");
+		
+		updater.deleteItem(category, IDs);
 		
 		return IDs;
 	}
