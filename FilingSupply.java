@@ -8,7 +8,7 @@
  * 
  * This program recieves an order for filing and selects the cheapest combination of parts to build them
  */
-
+package edu.ucalgary.ensf409;
 import java.sql.*;
 import java.util.*;  
 
