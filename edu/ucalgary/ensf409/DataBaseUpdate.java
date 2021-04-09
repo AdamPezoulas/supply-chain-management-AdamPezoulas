@@ -55,18 +55,17 @@ public class DataBaseUpdate {
     public void deleteItem(String object, String[] ids) {
         try {
             // trying to establish a connection to the database
-            Connection connectToDatabase = DriverManager.getConnection(getDBURL(), getUSERNAME(), getPASSWORD());
+            Connection connectToDatabase = DriverManager.getConnection(this.DBURL, this.USERNAME, this.PASSWORD);
             for (int i = 0; i < ids.length; i++) {
                 String tempItem = ids[i]; // sorting the id at index i in the array
                 try {
-                    String query = "DELETE FROM ? WHERE ID = ?"; // preparing the general SQL command
-                    PreparedStatement statement = connectToDatabase.prepareStatement(query);
-                    // setting the ? to the right parameters?
-                    statement.setString(1, object);
-                    statement.setString(2, tempItem);
-
-                    statement.executeUpdate();
-                    statement.close();
+                    String query = "DELETE FROM " + object + " WHERE ID = \"" + tempItem + "\""; // preparing the general SQL command
+                    
+					PreparedStatement myStmt = connectToDatabase.prepareStatement(query);
+            
+					myStmt.executeUpdate();
+					myStmt.close();
+                 
                 } catch (SQLException e) {
                     // TODO: handle exception
                     e.printStackTrace();
@@ -102,4 +101,13 @@ public class DataBaseUpdate {
     public String getUSERNAME() {
         return USERNAME;
     }
+		public static void main(String[] args) 
+	{
+
+        DataBaseUpdate test = new DataBaseUpdate("jdbc:mysql://localhost/inventory","adam","ENSF409");
+		
+		String[] testData = {"C320", "c1234"};
+        test.deleteItem("chair", testData);
+	}
+	
 }

@@ -1,19 +1,29 @@
- package edu.ucalgary.ensf409;
-
+/**
+ * @author Robert Dewar <a href="mailto:robert.dewar@ucalgary.ca">
+ *         robert.dewar@ucalgary.ca</a>
+ * 
+ * @version 1.3
+ * 
+ * @since 1.0
+ * 
+ * This program recieves an order for filing and selects the cheapest combination of parts to build them
+ */
+package edu.ucalgary.ensf409;
 import java.sql.*;
 import java.util.*;  
 
-
 public class FilingSupply{
 	
-	public final String DBURL; 
-    public final String USERNAME; 
-    public final String PASSWORD;
+	public final String DBURL; //stores the database URL
+    public final String USERNAME; //stores the user's username
+    public final String PASSWORD; //stores the user's password
 	public Connection dbConnect;
 	public ResultSet results;
 	public Boolean check = false;
 	public int totalcost=0;
-	
+	/** 
+	*Arraylists to store the database information
+	*/
 	public static ArrayList<String> filingIDs = new ArrayList<String>();
 	public static ArrayList<String> filingRails = new ArrayList<String>();
 	public static ArrayList<String> filingDrawers = new ArrayList<String>();
@@ -23,6 +33,9 @@ public class FilingSupply{
 	public static ArrayList<String> pairs = new ArrayList<String>();
 	public static ArrayList<String> filingManufacturers = new ArrayList<String>();
 	
+	/** 
+	*method to generate a string of the purchased furniture items
+	*/
 	public String[] getbuyList() {
 		String[] Buy = new String[BuyList.size()+1];
 		for (int i = 0; i < BuyList.size(); i++) {
@@ -35,13 +48,17 @@ public class FilingSupply{
 	}
 	
 	
-	
+	/** 
+	*constructor to set user variables
+	*/
 	public FilingSupply(String DBURL, String USERNAME, String PASSWORD) {
 		this.DBURL = DBURL;
 		this.USERNAME = USERNAME;
 		this.PASSWORD = PASSWORD;
 	}
-	
+	/** 
+	*method to generate an out of stock message with the relevant manufacturers
+	*/
 	public String[] errorMessage() {
 		
 		
@@ -79,17 +96,22 @@ public class FilingSupply{
 		
 		return newfilingManufacturers.toArray(errorM);
 	}
-	
+	/** 
+	*method to calculate a combination of cheapest possible filings
+	*/
 	public String[] cheapestFiling ( String Type, int quantity) {
 		
 	 
-		int cheapestpair=10000;
-		int cheapestpairIndex =0;
+		int cheapestpair=10000; //variable to store prices of cheapest group of indices from pairs arraylist
+		int cheapestpairIndex =0; //variable to store cheapest group of indices from pairs arraylist
 		
 		try {                    
             Statement myStmt = dbConnect.createStatement();
-            results = myStmt.executeQuery("SELECT * FROM filing ");
+            results = myStmt.executeQuery("SELECT * FROM filing ");//access desk table in database
 			
+			/** 
+			*initial block to fill arraylists with database info
+			*/
 			if ( check == false) {
 				filingIDs.clear();
 				filingRails.clear();
@@ -126,7 +148,9 @@ public class FilingSupply{
 				
 			
 			
-			
+			/** 
+			*block to store filings with all three parts available if any exist
+			*/
 			
 			for( int i =0; i< filingIDs.size(); i++) {
 				if((filingRails.get(i).equals( "Y")) && (filingDrawers.get(i).equals( "Y"))&& (filingCabinets.get(i).equals( "Y"))) {
@@ -137,7 +161,9 @@ public class FilingSupply{
 			
 			
 			}
-			
+			/** 
+			*block to get cheapest set of filings with all parts available
+			*/
 			if(pairs.size() != 0) {
 				for( int i =0; i< pairs.size(); i++) {
 					if(filingPrices.get(Integer.parseInt(pairs.get(i))) < cheapestpair) {
@@ -145,7 +171,9 @@ public class FilingSupply{
 						cheapestpairIndex = i;
 					}
 				}
-				
+				/** 
+				*update all arraylists 
+				*/
 				
 				BuyList.add(filingIDs.get(Integer.parseInt(pairs.get(cheapestpairIndex))));
 				totalcost += filingPrices.get(Integer.parseInt(pairs.get(cheapestpairIndex)));
@@ -167,7 +195,9 @@ public class FilingSupply{
 				
 				quantity-=1;
 			}
-			
+			/** 
+			*block to store sets of two filings that contains all parts
+			*/
 			else if(pairs.size() ==0) {
 				for( int i =0; i< filingIDs.size(); i++) {
 					for( int j =i+1; j< filingIDs.size(); j++) {			
@@ -180,6 +210,9 @@ public class FilingSupply{
 									
 					}		
 				}
+				/** 
+				*block to get cheapest set of two filings
+				*/
 				if(pairs.size() !=0) {
 					for( int i =0; i< pairs.size(); i++) {
 						if(filingPrices.get(Integer.parseInt(pairs.get(i).substring(0,1))) + filingPrices.get(Integer.parseInt(pairs.get(i).substring(1,2))) < cheapestpair) {
@@ -187,6 +220,9 @@ public class FilingSupply{
 							cheapestpairIndex = i;
 						}
 					}
+					/** 
+					*update all arraylists
+					*/
 					
 					BuyList.add(filingIDs.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1))));
 					BuyList.add(filingIDs.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2))));
@@ -218,6 +254,9 @@ public class FilingSupply{
 					
 					
 				}
+				/** 
+				*block to store sets of three filings that contains all parts
+				*/
 				else if(pairs.size() ==0) {
 					for( int i =0; i< filingIDs.size(); i++) {
 						for( int j =i+1; j< filingIDs.size(); j++) {			
@@ -230,11 +269,17 @@ public class FilingSupply{
 							}			
 						}		
 					}	
+					/** 
+					*return error message if no sets of three or less exist
+					*/
 					if(pairs.size() == 0) {
 						
 						return errorMessage();
 						
 					}
+					/** 
+					*block to get cheapest set of three filings
+					*/
 					else if (pairs.size() != 0) {
 						for( int i =0; i< pairs.size(); i++) {
 							if(filingPrices.get(Integer.parseInt(pairs.get(i).substring(0,1))) + filingPrices.get(Integer.parseInt(pairs.get(i).substring(1,2))) + filingPrices.get(Integer.parseInt(pairs.get(i).substring(2,3))) < cheapestpair) {
@@ -243,7 +288,9 @@ public class FilingSupply{
 							}
 						}
 						
-						
+						/** 
+						*update all arraylists
+						*/
 						BuyList.add(filingIDs.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(0,1))));
 						
 						BuyList.add(filingIDs.get(Integer.parseInt(pairs.get(cheapestpairIndex).substring(1,2))));
@@ -280,25 +327,33 @@ public class FilingSupply{
 				
 			}
 			
-			
+			/** 
+			*if there is another filing requested, cheapestFiling is called again
+			*/
 			if(quantity !=0) {
 				return cheapestFiling(Type, quantity);
 			}
 			
 			
-			
+			/** 
+			*close instance of database access
+			*/
             
             myStmt.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 		
-		
+		/** 
+		*return list of purchased filings
+		*/
 		check = false;	
 		return getbuyList();
 		
 	}
-	
+	/** 
+	*method to initialize database connection with login information
+	*/
 	public void initializeConnection(){
                 
         try{
@@ -307,6 +362,9 @@ public class FilingSupply{
             e.printStackTrace();
         }
     }
+	/** 
+	*main method
+	*/
 	public static void main(String[] args) {
 		FilingSupply myJDBC = new FilingSupply("jdbc:mysql://localhost/inventory","adam","ENSF409");
         myJDBC.initializeConnection();
