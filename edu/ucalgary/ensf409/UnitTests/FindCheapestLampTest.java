@@ -20,8 +20,8 @@ public class FindCheapestLampTest
 {
 
 	static final String DBURL = "jdbc:mysql://localhost/inventory";
-	static final String USER = "adam";
-	static final String PASS = "ENSF409";
+	static final String USER = "scm";
+	static final String PASS = "ensf409";
 
   @Test
   // Constructor created with all arguments

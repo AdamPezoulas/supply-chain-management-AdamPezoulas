@@ -363,15 +363,5 @@ public class FilingSupply{
             e.printStackTrace();
         }
     }
-	/** 
-	*main method
-	*/
-	public static void main(String[] args) {
-		FilingSupply myJDBC = new FilingSupply("jdbc:mysql://localhost/inventory","adam","ENSF409");
-        myJDBC.initializeConnection();
-        
-		System.out.println(Arrays.toString(myJDBC.cheapestFiling("Large", 8)));
-	
-		
-    }
+
 }

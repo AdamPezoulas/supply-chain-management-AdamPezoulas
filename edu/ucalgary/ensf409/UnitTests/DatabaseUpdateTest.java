@@ -22,7 +22,7 @@ import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 public class DatabaseUpdateTest {
 
     static final String DBURL = "jdbc:mysql://localhost/inventory";
-    static final String USER = "Braden";
+    static final String USER = "scm";
     static final String PASS = "ensf409";
 
     @Test

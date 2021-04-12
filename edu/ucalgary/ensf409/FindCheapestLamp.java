@@ -232,15 +232,4 @@ public class FindCheapestLamp
         }
 	}
 	
-	
-	public static void main(String[] args) 
-	{
-
-        FindCheapestLamp test = new FindCheapestLamp("jdbc:mysql://localhost/inventory","adam","ENSF409","Swing Arm",3);
-        String[] data = test.sourceLamp();
-		for(int i = 0; i < data.length; i++)
-		{
-			System.out.println(data[i]);
-		}
-	}
 }

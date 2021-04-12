@@ -101,13 +101,5 @@ public class DataBaseUpdate {
     public String getUSERNAME() {
         return USERNAME;
     }
-		public static void main(String[] args) 
-	{
 
-        DataBaseUpdate test = new DataBaseUpdate("jdbc:mysql://localhost/inventory","adam","ENSF409");
-		
-		String[] testData = {"C320", "c1234"};
-        test.deleteItem("chair", testData);
-	}
-	
 }

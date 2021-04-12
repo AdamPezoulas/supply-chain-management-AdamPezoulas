@@ -365,16 +365,5 @@ public class DeskSupply{
             e.printStackTrace();
         }
     }
-	/** 
-	*main method
-	*/
-	public static void main(String[] args) {
-		DeskSupply myJDBC = new DeskSupply("jdbc:mysql://localhost/inventory","root","82he9os12");
-        myJDBC.initializeConnection();
-        
-		
-		
-		System.out.println(Arrays.toString(myJDBC.cheapestDesk("Adjustable", 5)));
-		
-    }
+
 }

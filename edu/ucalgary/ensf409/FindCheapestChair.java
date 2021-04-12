@@ -311,14 +311,5 @@ public class FindCheapestChair
 		}
 	}
 	
-	public static void main(String[] args) 
-	{
 
-        FindCheapestChair test = new FindCheapestChair("jdbc:mysql://localhost/inventory","adam","ENSF409","Mesh",2);
-        String[] data = test.sourceChair();
-		for(int i = 0; i < data.length; i++)
-		{
-			System.out.println(data[i]);
-		}
-	}
 }

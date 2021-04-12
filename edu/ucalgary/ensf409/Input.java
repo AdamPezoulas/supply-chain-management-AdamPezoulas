@@ -15,6 +15,13 @@ import java.util.Arrays;
 import java.util.InputMismatchException;
 
 public class Input {
+	
+	private final static String DBURL = "jdbc:mysql://localhost/inventory"; //database URL
+	private final static String USER = "scm";		//database username
+	private final static String PASS = "ensf409";	//database password
+	private static String category; // category of furniture
+	private static String type; // type of furniture
+	private static String number;// amount of furniture requested
 
 	public static void main(String[] args) {
 
@@ -23,10 +30,8 @@ public class Input {
 	}
 	
 
-
-	private static String category; // category of furniture
-	private static String type; // type of furniture
-	private static String number;// amount of furniture requested
+	
+	
 
 	static Scanner scan = new Scanner(System.in);// Scanner to allow user input
 
@@ -151,7 +156,7 @@ public class Input {
 					number = scan.next();
 				}
 				// call method to find cheapest set of chairs
-				FindCheapestChair findChair = new FindCheapestChair("jdbc:mysql://localhost/inventory", "adam", "ENSF409", type, Integer.parseInt(number));
+				FindCheapestChair findChair = new FindCheapestChair(DBURL, USER, PASS, type, Integer.parseInt(number));
 				// store ids of cheapest chairs
 				IDs = findChair.sourceChair();
 
@@ -181,7 +186,7 @@ public class Input {
 				
 				// call method to find cheapest set of desks
 				
-				DeskSupply findDesk = new DeskSupply("jdbc:mysql://localhost/inventory", "adam", "ENSF409");
+				DeskSupply findDesk = new DeskSupply(DBURL, USER, PASS);
 
 				findDesk.initializeConnection();
 				// store ids of cheapest desks
@@ -211,7 +216,7 @@ public class Input {
 					number = scan.next();
 				}
 				// call method to find cheapest set of filings
-				FilingSupply findFiling = new FilingSupply("jdbc:mysql://localhost/inventory", "adam", "ENSF409");
+				FilingSupply findFiling = new FilingSupply(DBURL, USER, PASS);
 
 				findFiling.initializeConnection();
 				// store ids of cheapest filings
@@ -241,7 +246,7 @@ public class Input {
 				
 				// call method to find cheapest set of lamps
 				
-				FindCheapestLamp findLamp = new FindCheapestLamp("jdbc:mysql://localhost/inventory", "adam", "ENSF409",
+				FindCheapestLamp findLamp = new FindCheapestLamp(DBURL, USER, PASS,
 						type, Integer.parseInt(number));
 				// store ids of cheapest lamps
 				IDs = findLamp.sourceLamp();
@@ -254,13 +259,13 @@ public class Input {
 		// copy list of ids
 		String[] IDsOnly = Arrays.copyOf(IDs, IDs.length - 1);
 	
-		String path = "C:\\Users\\Pezfa\\Desktop\\HYL\\ProjectFork\\supply-chain-management-AdamPezoulas\\";
+		String path = System.getProperty("user.dir") + "\\";
 		// calling FileWriting to write the order form
 		FileWriting fileOut = new FileWriting(type, Integer.parseInt(number), IDsOnly, path, totalPrice);
 
 		fileOut.writeFile();
 		
-		DataBaseUpdate updater = new DataBaseUpdate("jdbc:mysql://localhost/inventory","adam","ENSF409");
+		DataBaseUpdate updater = new DataBaseUpdate(DBURL,USER,PASS);
 		
 		updater.deleteItem(category, IDs);
 		

@@ -9,7 +9,7 @@ import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 public class FileWritingTest 
 {
 
-	private String location = "C:\\Users\\Pezfa\\Desktop\\HYL\\ProjectFork\\supply-chain-management-AdamPezoulas\\";
+	private String location = System.getProperty("user.dir") + "\\";
 	private String fileName = "OrderSummary.txt";
   @Test
   /**
