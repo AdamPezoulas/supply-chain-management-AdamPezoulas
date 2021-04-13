@@ -2,7 +2,7 @@
  * @author Braden Foley <a href="mailto:braden.foley@ucalgary.ca">
  *         braden.foley@ucalgary.ca</a>
  * 
- * @version 1.2
+ * @version 1.4
  * 
  * @since 1.0
  * 
@@ -19,6 +19,8 @@ import java.util.*;
 
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
 
+import edu.ucalgary.ensf409.DataBaseUpdate;
+
 public class DatabaseUpdateTest {
 
     static final String DBURL = "jdbc:mysql://localhost/inventory";
@@ -28,16 +30,49 @@ public class DatabaseUpdateTest {
     @Test
     /**
      * This will test to see if we actually delete an ordered mesh chair
+     * Constructor with 3 arguments 
+     * deleteItem() with one argument
      */
     public void testRemove1MeshChair() {
         // creating new DataBaseUpdate object
         DataBaseUpdate test = new DataBaseUpdate(DBURL, USER, PASS);
-
+        // String arrray with the ID of the item we want to delete
         String[] ids = { "C9890" };
         test.deleteItem("chair", ids);
         // checking to see if the mesh chair was actually deleted
         assertFalse("The item still exists in the database", searchDatabase(ids, "chair"));
 
+    }
+
+    @Test
+    /**
+     * This test trys to delete 2 items of the same type from the database
+     * Constructor with 3 arguments 
+     * deleteItem() with one argument
+     */
+    public void testRemove2TaskChairs() {
+        // creating new DataBaseUpdate object
+        DataBaseUpdate test = new DataBaseUpdate(DBURL, USER, PASS);
+        // String arrray with the IDs of the items we want to delete
+        String[] ids = { "C0914", "C1148" };
+        test.deleteItem("chair", ids);
+        // checking to see if both items were properly deleted
+        assertFalse("One or both of the items are still in the database", searchDatabase(ids, "chair"));
+    }
+
+    @Test
+    /**
+     * This test trys to remove 2 items of differing types, i.e desk and study lamps
+     * Constructor with 3 arguments deleteItem() with one argument
+     */
+    public void testRemoveDeskLampStudyLamp() {
+        // creating new DataBaseUpdate object
+        DataBaseUpdate test = new DataBaseUpdate(DBURL, USER, PASS);
+        // String arrray with the IDs of the items we want to delete
+        String[] ids = { "L112", "L223" };
+        test.deleteItem("lamp", ids);
+        // checking to see if both items were properly deleted
+        assertFalse("One or both of the items are still in the database", searchDatabase(ids, "lamp"));
     }
 
     /**
@@ -49,11 +84,11 @@ public class DatabaseUpdateTest {
      * @return returns true if a match is found, otherwise false
      */
     public boolean searchDatabase(String[] ID, String object) {
-        try {
+        try { // establishing connection to database
             Connection dbConnection = DriverManager.getConnection(DBURL, USER, PASS);
             try {
                 ArrayList<String> databaseIds = new ArrayList<>();
-                // connecting to database
+                // getting our statement ready
                 Statement myStmt = dbConnection.createStatement();
                 // checking which category we are looking at
                 if (object.equals("chair")) {
