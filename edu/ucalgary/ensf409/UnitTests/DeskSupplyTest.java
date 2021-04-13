@@ -7,6 +7,7 @@
  * @since 1.0
  * 
  * Unit tests for DeskSupply.java, tests findCheapest methods
+ * Group 13: Adam Pezoulas, Braden Foley, Rober Dewar, Muhammad Shakeel
  */
 package edu.ucalgary.ensf409;
 

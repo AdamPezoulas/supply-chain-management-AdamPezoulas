@@ -7,6 +7,7 @@
  * @since 1.0
  * 
  * This program gets data from findCheapest program in order to give the user a formated summary of their request.
+ * Group 13: Adam Pezoulas, Braden Foley, Rober Dewar, Muhammad Shakeel
  */
 package edu.ucalgary.ensf409;
 

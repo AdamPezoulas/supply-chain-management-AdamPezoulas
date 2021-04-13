@@ -7,6 +7,7 @@
  * @since 1.0
  * 
  * Class to store Chair information
+ * Group 13: Adam Pezoulas, Braden Foley, Rober Dewar, Muhammad Shakeel
  */
  package edu.ucalgary.ensf409;
 public class Chair {

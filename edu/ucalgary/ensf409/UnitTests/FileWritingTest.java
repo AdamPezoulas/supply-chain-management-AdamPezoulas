@@ -1,3 +1,14 @@
+/**
+ * @author Adam Pezoulas <a href="mailto:adam.pezoulas@ucalgary.ca">
+ *         adam.pezoulas@ucalgary.ca</a>
+ * 
+ * @version 1.4
+ * 
+ * @since 1.0
+ * 
+ * Tests the source method of FindCheapestLamp
+ * Group 13: Adam Pezoulas, Braden Foley, Rober Dewar, Muhammad Shakeel
+ */
 package edu.ucalgary.ensf409;
 
 import static org.junit.Assert.*;

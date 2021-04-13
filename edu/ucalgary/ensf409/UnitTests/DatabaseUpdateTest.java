@@ -7,7 +7,7 @@
  * @since 1.0
  * 
  * This program will test to make sure that our DataBaseUpdate properly removes the items ordered from inventory
- * 
+ * Group 13: Adam Pezoulas, Braden Foley, Rober Dewar, Muhammad Shakeel
  */
 package edu.ucalgary.ensf409;
 

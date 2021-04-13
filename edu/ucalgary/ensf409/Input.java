@@ -7,6 +7,7 @@
  * @since 1.0
  * 
  * Class to accept user inputs as furniture order specifications.
+ * Group 13: Adam Pezoulas, Braden Foley, Rober Dewar, Muhammad Shakeel
  */
 package edu.ucalgary.ensf409;
 

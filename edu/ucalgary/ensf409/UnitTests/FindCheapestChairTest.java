@@ -8,6 +8,7 @@
  * @since 1.0
  * 
  * Tests Find cheapest chair source method
+ * Group 13: Adam Pezoulas, Braden Foley, Rober Dewar, Muhammad Shakeel
  */
 
 

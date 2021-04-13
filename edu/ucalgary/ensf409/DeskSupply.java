@@ -7,6 +7,7 @@
  * @since 1.0
  * 
  * This program recieves an order for desks and selects the cheapest combination of parts to build them
+ * Group 13: Adam Pezoulas, Braden Foley, Rober Dewar, Muhammad Shakeel
  */
 
 package edu.ucalgary.ensf409;

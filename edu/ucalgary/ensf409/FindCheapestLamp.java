@@ -7,6 +7,7 @@
  * @since 1.0
  * 
  * This program selects the cheapest combination of lamps to complete an order
+ * Group 13: Adam Pezoulas, Braden Foley, Rober Dewar, Muhammad Shakeel
  */
 package edu.ucalgary.ensf409;
 

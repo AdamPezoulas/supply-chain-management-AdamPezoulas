@@ -7,6 +7,7 @@
  * @since 1.0
  * 
  * Class to store Lamp information
+ * Group 13: Adam Pezoulas, Braden Foley, Rober Dewar, Muhammad Shakeel
  */
  package edu.ucalgary.ensf409;
 
