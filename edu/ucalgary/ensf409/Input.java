@@ -1,8 +1,8 @@
 /**
- * @author Robert Dewar <a href="mailto:robert.dewar@ucalgary.ca">
- *         robert.dewar@ucalgary.ca</a>
+ * @author Muhammad Shakeel <a href="mailto:muhammad.shakeel1@ucalgary.ca">
+ *         muhammad.shakeel1@ucalgary.ca</a>
  * 
- * @version 1.2
+ * @version 1.1
  * 
  * @since 1.0
  * 
@@ -26,12 +26,9 @@ public class Input {
 
 	public static void main(String[] args) {
 
-		acceptOrder();
+		acceptOrder();//call to function acceptOrder
 
 	}
-	
-
-	
 	
 
 	static Scanner scan = new Scanner(System.in);// Scanner to allow user input
@@ -117,7 +114,7 @@ public class Input {
 	
 	
 		/**
-		 * Method used to recieve user input and assign it to order specifications.
+		 * Method used to receive user input and assign it to order specifications.
 		 */
 	
 	public static String[] acceptOrder() {
