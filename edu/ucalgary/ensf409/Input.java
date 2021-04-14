@@ -2,7 +2,7 @@
  * @author Muhammad Shakeel <a href="mailto:muhammad.shakeel1@ucalgary.ca">
  *         muhammad.shakeel1@ucalgary.ca</a>
  * 
- * @version 1.1
+ * @version 1.2
  * 
  * @since 1.0
  * 
@@ -17,7 +17,6 @@ import java.util.InputMismatchException;
 
 public class Input {
 	
-	
 	private final static String DBURL = "jdbc:mysql://localhost/inventory"; //database URL
 	private final static String USER = "scm";		//database username
 	private final static String PASS = "ensf409";	//database password
@@ -27,9 +26,11 @@ public class Input {
 
 	public static void main(String[] args) {
 
-		acceptOrder();//call to function acceptOrder
+		acceptOrder();
 
 	}
+	
+
 	
 	
 
@@ -113,11 +114,15 @@ public class Input {
 		
 	}
 	
+	
+	
 		/**
-		 * Method used to receive user input and assign it to order specifications.
+		 * Method used to recieve user input and assign it to order specifications.
 		 */
 	
 	public static String[] acceptOrder() {
+		
+
 		
 		
 		// to hold returned IDs and totalPrice from internal class methods
@@ -134,6 +139,7 @@ public class Input {
 			if (category.equals("chair")) {
 				
 				System.out.println("Please enter one type of chair (Kneeling, Task, Mesh, Executive, Ergonomic)");
+				
 				
 				type = scan.next().toLowerCase();
 				type = type.substring(0,1).toUpperCase() + type.substring(1);
@@ -190,6 +196,7 @@ public class Input {
 			// checking to see if user requested filing
 			else if (category.equals("filing")) {
 				
+		
 				System.out.println("Please Enter one type of filing (Small, Medium, Large)");
 				// storing type of filing in type.
 				type = scan.next().toLowerCase();
@@ -199,6 +206,8 @@ public class Input {
 					type = scan.next().toLowerCase();
 					type = type.substring(0,1).toUpperCase() + type.substring(1);
 				}
+				
+				
 				
 				System.out.println("Please enter number of filing(s)");
 				// storing amount of filings being requested in variable called number
@@ -237,6 +246,7 @@ public class Input {
 				}
 				
 				// call method to find cheapest set of lamps
+				
 				FindCheapestLamp findLamp = new FindCheapestLamp(DBURL, USER, PASS,
 						type, Integer.parseInt(number));
 				// store ids of cheapest lamps
@@ -253,9 +263,13 @@ public class Input {
 		String path = System.getProperty("user.dir") + "\\";
 		// calling FileWriting to write the order form
 		FileWriting fileOut = new FileWriting(type, Integer.parseInt(number), IDsOnly, path, totalPrice);
+
 		fileOut.writeFile();
+		
 		DataBaseUpdate updater = new DataBaseUpdate(DBURL,USER,PASS);
+		
 		updater.deleteItem(category, IDs);
+		
 		return IDs;
 	}
 
