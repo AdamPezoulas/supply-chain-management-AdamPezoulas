@@ -1,6 +1,6 @@
 /**
- * @author Muhammad Shakeel <a href="mailto:muhammad.shakeel1@ucalgary.ca">
- *         muhammad.shakeel1@ucalgary.ca</a>
+ * @author Robert Dewar <a href="mailto:robert.dewar@ucalgary.ca">
+ *         robert.dewar@ucalgary.ca</a>
  * 
  * @version 1.2
  * 
